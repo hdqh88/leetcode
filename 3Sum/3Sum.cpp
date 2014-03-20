@@ -19,12 +19,17 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
 class Solution {
 public:
     vector<vector<int> > threeSum(vector<int> &num) {
+        return threeSum2(num);
+    }
+
+    vector<vector<int> > threeSum1(vector<int> &num) {
         vector<vector<int> > res;
         int N = num.size();
         if (N < 3) return res;
@@ -40,6 +45,30 @@ public:
                     res.push_back(vector<int>({ num[k], num[i], num[j] }));
                     do { i++; } while (i < j && num[i - 1] == num[i]);
                     do { j--; } while (i < j && num[j] == num[j + 1]);
+                }
+            }
+        }
+        return res;
+    }
+
+    vector<vector<int> > threeSum2(vector<int> &num) {
+        vector<vector<int> > res;
+        int N = num.size();
+        if (N < 3) return res;
+        unordered_multimap<int, int> tb;
+        for (int i = 0; i < N; i++) tb.insert(make_pair(num[i], i));
+        for (int i = 0; i < N; i++) {
+            int target = -num[i];
+            for (auto it1 = tb.begin(); it1 != tb.end(); it1++) {
+                int j = it1->second;
+                if (i == j) continue;
+                auto range = tb.equal_range(target - it1->first);
+                for (auto it2 = range.first; it2 != range.second; it2++) {
+                    int k = it2->second;
+                    if (j == k) continue;
+                    vector<int> path = { num[i], num[j], num[k] };
+                    sort(begin(path), end(path));
+                    if (find(begin(res), end(res), path) == end(res)) res.push_back(path);
                 }
             }
         }

@@ -20,12 +20,17 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
 class Solution {
 public:
     vector<vector<int> > fourSum(vector<int> &num, int target) {
+        return fourSum1(num, target);
+    }
+
+    vector<vector<int> > fourSum1(vector<int> &num, int target) {
         vector<vector<int> > res;
         int N = num.size();
         if (N < 4) return res;
@@ -45,6 +50,29 @@ public:
                         do { c--; } while (r < c && num[c] == num[c + 1]);
                     }
                 }
+            }
+        }
+        return res;
+    }
+
+    vector<vector<int> > fourSum2(vector<int> &num, int target) {
+        vector<vector<int> > res;
+        int N = num.size();
+        if (N < 4) return res;
+        unordered_multimap<int, pair<int, int> > tb;
+        for (int i = 0; i < N - 1; i++) {
+            for (int j = i + 1; j < N; j++) {
+                tb.insert(make_pair(num[i] + num[j], make_pair(i, j)));
+            }
+        }
+        for (auto it1 = tb.begin(); it1 != tb.end(); it1++) {
+            auto range = tb.equal_range(target - it1->first);
+            for (auto it2 = range.first; it2 != range.second; it2++) {
+                int a = it1->second.first, b = it1->second.second, c = it2->second.first, d = it2->second.second;
+                if (a == c || a == d || b == c || b == d) continue;
+                vector<int> path = { num[a], num[b], num[c], num[d] };
+                sort(begin(path), end(path));
+                if (find(res.begin(), res.end(), path) == res.end()) res.push_back(path);
             }
         }
         return res;
