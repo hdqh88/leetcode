@@ -26,31 +26,22 @@ using namespace std;
 class Solution {
 public:
     int evalRPN(vector<string> &tokens) {
+        int op1, op2;
         stack<int> stk;
-        for (string str : tokens) {
-            if (str == "+") {
-                int y = stk.top(); stk.pop();
-                int x = stk.top(); stk.pop();
-                stk.push(x + y);
+        for (auto str : tokens) {
+            if (str == "+" || str == "-" || str == "*" || str == "/") {
+                op2 = stk.top(), stk.pop();
+                op1 = stk.top(), stk.pop();
+                if (str == "+") stk.push(op1 + op2);
+                else if (str == "-") stk.push(op1 - op2);
+                else if (str == "*") stk.push(op1*op2);
+                else stk.push(op1 / op2);
             }
-            else if (str == "-") {
-                int y = stk.top(); stk.pop();
-                int x = stk.top(); stk.pop();
-                stk.push(x - y);
+            else {
+                stk.push(stoi(str));
             }
-            else if (str == "*") {
-                int y = stk.top(); stk.pop();
-                int x = stk.top(); stk.pop();
-                stk.push(x * y);
-            }
-            else if (str == "/") {
-                int y = stk.top(); stk.pop();
-                int x = stk.top(); stk.pop();
-                stk.push(x / y);
-            }
-            else stk.push(stoi(str));
         }
-        return stk.empty() ? 0 : stk.top();
+        return stk.top();
     }
 };
 

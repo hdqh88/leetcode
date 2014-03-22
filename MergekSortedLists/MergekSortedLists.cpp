@@ -7,45 +7,52 @@
 //============================================================================
 
 #include <iostream>
-#include <queue>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
-
 /**
- * Definition for singly-linked list.
- */
+* Definition for singly-linked list.
+*/
 struct ListNode {
-     int val;
-     ListNode *next;
-     ListNode(int x) : val(x), next(NULL) {};
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {};
 };
 
-struct cmp {
-    bool operator() (ListNode * a, ListNode * b) { return a->val > b->val; };
-};
+ListNode * pushDummy(ListNode * head) {
+    ListNode * newNode = new ListNode(-1);
+    newNode->next = head;
+    return newNode;
+}
+
+ListNode * popDummy(ListNode * head) {
+    ListNode * delNode = head;
+    head = head->next;
+    delete delNode;
+    return head;
+}
 
 class Solution {
 public:
     ListNode *mergeKLists(vector<ListNode *> &lists) {
-        priority_queue<ListNode*, vector<ListNode*>, cmp> pq;
-        for (auto curNode : lists) if (curNode != NULL) pq.push(curNode);
-        ListNode * head = new ListNode(-1), * curNode = head;
-        while (!pq.empty()) {
-            ListNode * nextNode = pq.top();
-            pq.pop();
-            if (nextNode->next != NULL) pq.push(nextNode->next);
+        auto it = begin(lists);
+        while (it != end(lists)) {
+            if (*it == NULL) it = lists.erase(it);
+            else it++;
+        }
+        if (lists.empty()) return NULL;
+        auto cmp = [](ListNode * p, ListNode * q) { return p->val > q->val; };
+        make_heap(begin(lists), end(lists), cmp);
+        ListNode * head = pushDummy(head), *curNode = head, *nextNode = NULL;
+        while (!lists.empty()) {
+            pop_heap(begin(lists), end(lists), cmp), nextNode = lists.back(), lists.pop_back();
+            if (nextNode->next != NULL) lists.push_back(nextNode->next), push_heap(begin(lists), end(lists), cmp);
             curNode->next = nextNode;
             curNode = curNode->next;
         }
-        return deleteNode(head);
-    }
-
-    ListNode * deleteNode(ListNode * curNode) {
-        ListNode * toDel = curNode;
-        curNode = curNode->next;
-        delete toDel;
-        return curNode;
+        return popDummy(head);
     }
 };
 
