@@ -33,29 +33,30 @@ public:
     vector<vector<string> > partition1(string & s) {
         int N = s.size();
         vector<vector<bool> > dp1(N, vector<bool>(N, false));
-        vector<vector<vector<string> > > dp2(N, vector<vector<string> >());
         for (int j = 0; j < N; j++) {
-            for (int i = j; i >= 0; i--) {
+            for (int i = 0; i <= j; i++) {
                 if (s[i] == s[j] && (j - i < 2 || dp1[i + 1][j - 1])) dp1[i][j] = true;
             }
         }
-
-        return partitionHelper(s, 0, dp1, dp2);
+        vector<vector<vector<string> > > dp2(N, vector<vector<string> >());
+        return go(s, N - 1, dp1, dp2);
     }
 
-    vector<vector<string> > partitionHelper(string & s, int i, vector<vector<bool> > & dp1, vector<vector<vector<string> > > & dp2) {
-        if (i == s.size()) return vector<vector<string> >(1, vector<string>());
-        if (!dp2[i].empty()) return dp2[i];
+    vector<vector<string> > go(string & s, int j, vector<vector<bool> > & dp1, vector<vector<vector<string> > > & dp2) {
+        if (!dp2[j].empty()) return dp2[j];
         vector<vector<string> > res;
-        for (int j = i; j < s.size(); j++) {
+        for (int i = 0; i <= j; i++) {
             if (!dp1[i][j]) continue;
-            auto ps = partitionHelper(s, j + 1, dp1, dp2);
-            for (auto p : ps) {
-                p.insert(p.begin(), s.substr(i, j - i + 1));
-                res.push_back(p);
+            if (i == 0) res.push_back(vector<string>(1, s.substr(i, j - i + 1)));
+            else {
+                auto ps = go(s, i - 1, dp1, dp2);
+                for (auto & p : ps) {
+                    p.push_back(s.substr(i, j - i + 1));
+                    res.push_back(p);
+                }
             }
         }
-        return dp2[i] = res;
+        return dp2[j] = res;
     }
 
     vector<vector<string> > partition2(string & s) {

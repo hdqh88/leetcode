@@ -28,8 +28,8 @@ public:
         ListNode * curNode = head;
         for (; curNode->next != NULL; curNode = curNode->next) l++;
         curNode->next = head;
-        k = l - k%l;
-        for (; k > 0; k--) curNode = curNode->next;
+        l -= k%l;
+        for (; l > 0; l--) curNode = curNode->next;
         head = curNode->next;
         curNode->next = NULL;
         return head;

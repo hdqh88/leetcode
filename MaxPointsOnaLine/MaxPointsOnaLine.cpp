@@ -33,10 +33,10 @@ public:
         if (N < 3) return N;
         unordered_map<int, int> tb;
         int res = 0;
-        for (int i = j; i < N; i++) {
+        for (int i = 0; i < N; i++) {
             tb.clear();
             int o = 0, u = 0, v = 0;
-            for (int j = 0; j < N; j++) {
+            for (int j = i; j < N; j++) {
                 int x = points[j].x - points[i].x, y = points[j].y - points[i].y;
                 if (x == 0 && y == 0) o++;
                 else if (x == 0) v++;

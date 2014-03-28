@@ -47,28 +47,17 @@ public:
     }
 
     void reverseWords2(string &s) {
-        removeSpaces(s);
-        if (s.empty()) return;
-        int N = s.size(), i = 0, j = 0;
-        while (true) {
-            i = j;
-            while (j < N && !isspace(s[j])) j++;
-            reverse(s.begin() + i, s.begin() + j);
-            if (j == N) break;
-            j++;
+        string res;
+        for (int i = s.length() - 1; i >= 0;) {
+            while (i >= 0 && s[i] == ' ') i--;
+            if (i < 0) break;
+            if (!res.empty()) res.push_back(' ');
+            string tmp;
+            while (i >= 0 && s[i] != ' ') tmp.push_back(s[i--]);
+            reverse(tmp.begin(), tmp.end());
+            res.append(tmp);
         }
-        reverse(s.begin(), s.end());
-    }
-
-    void removeSpaces(string & s) {
-        int N = s.size(), i = 0, j = 0;
-        while (i < N) {
-            while (i < N && isspace(s[i])) i++;
-            if (i == N) break;
-            if (j != 0) s[j++] = ' ';
-            while (i < N && !isspace(s[i])) s[j++] = s[i++];
-        }
-        s.resize(j);
+        s = res;
     }
 };
 

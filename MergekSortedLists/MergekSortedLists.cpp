@@ -37,20 +37,16 @@ ListNode * popDummy(ListNode * head) {
 class Solution {
 public:
     ListNode *mergeKLists(vector<ListNode *> &lists) {
-        auto it = begin(lists);
-        while (it != end(lists)) {
-            if (*it == NULL) it = lists.erase(it);
-            else it++;
-        }
-        if (lists.empty()) return NULL;
-        auto cmp = [](ListNode * p, ListNode * q) { return p->val > q->val; };
-        make_heap(begin(lists), end(lists), cmp);
-        ListNode * head = pushDummy(head), *curNode = head, *nextNode = NULL;
+        auto it = lists.begin();
+        while (it != lists.end()) it = *it ? it + 1 : lists.erase(it);
+        auto cmp = [](ListNode * p, ListNode *q) { return p->val > q->val; };
+        make_heap(lists.begin(), lists.end(), cmp);
+        ListNode *head = pushDummy(NULL), *cur = head, *next = NULL;
         while (!lists.empty()) {
-            pop_heap(begin(lists), end(lists), cmp), nextNode = lists.back(), lists.pop_back();
-            if (nextNode->next != NULL) lists.push_back(nextNode->next), push_heap(begin(lists), end(lists), cmp);
-            curNode->next = nextNode;
-            curNode = curNode->next;
+            pop_heap(lists.begin(), lists.end(), cmp), next = lists.back(), lists.pop_back();
+            if (next->next != NULL) lists.push_back(next->next), push_heap(lists.begin(), lists.end(), cmp);
+            cur->next = next;
+            cur = cur->next;
         }
         return popDummy(head);
     }
