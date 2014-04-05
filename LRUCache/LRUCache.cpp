@@ -32,14 +32,14 @@ public:
 
     int get(int key) {
         if (!_map.count(key)) return -1;
-        move(key);
+        promote(key);
         return _map[key]->value;
     }
 
     void set(int key, int value) {
         if (_map.count(key)) {
             _map[key]->value = value;
-            move(key);
+            promote(key);
         }
         else {
             if (_cap == _map.size()) {
@@ -52,7 +52,7 @@ public:
     }
 
 private:
-    void move(int key) {
+    void promote(int key) {
         auto it = _map[key];
         _list.push_front(*it);
         _list.erase(it);

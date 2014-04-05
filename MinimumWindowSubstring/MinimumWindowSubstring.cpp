@@ -27,31 +27,31 @@ using namespace std;
 class Solution {
 public:
     string minWindow(string S, string T) {
-        int toFind[256];
-        int hasFound[256];
-        memset(toFind, 0, sizeof(toFind));
-        memset(hasFound, 0, sizeof(hasFound));
+        int toFind[256] = { 0 }, hasFound[256] = { 0 };
         for (char c : T) toFind[c]++;
-
-        int M = S.size(), N = T.size(), count = 0, mini = -1, minl = INT_MAX;
-        for (int start = 0, end = 0; end < M; end++) {
+        int mini = -1, minl = INT_MAX, cnt = 0;
+        for (int begin = 0, end = 0; end < S.size(); end++) {
             if (toFind[S[end]] == 0) continue;
             hasFound[S[end]]++;
-            if (hasFound[S[end]] <= toFind[S[end]]) count++;
-            if (count == N) {
-                while (toFind[S[start]] == 0 || hasFound[S[start]] > toFind[S[start]]) {
-                    if (hasFound[S[start]] > toFind[S[start]]) hasFound[S[start]]--;
-                    start++;
+            if (hasFound[S[end]] <= toFind[S[end]]) cnt++;
+            if (cnt == T.size()) {
+                while (toFind[S[begin]] == 0 || hasFound[S[begin]] > toFind[S[begin]]) {
+                    if (toFind[S[begin]] != 0) hasFound[S[begin]]--;
+                    begin++;
                 }
-                int len = end-start+1;
-                if (len < minl) minl = len, mini = start;
+                int len = end - begin + 1;
+                if (len < minl) minl = len, mini = begin;
             }
         }
-
-        return (mini==-1)?"":S.substr(mini, minl);
+        return mini == -1 ? "" : S.substr(mini, minl);
     }
 };
 
 int main() {
-   return 0;
+
+    {
+        Solution sol;
+        cout << sol.minWindow("ADOBECODEBANC", "ABC") << endl;
+    }
+    return 0;
 }

@@ -19,7 +19,8 @@
 
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
+
 using namespace std;
 
 class Solution {
@@ -54,10 +55,10 @@ public:
         unordered_map<string, int> toFind, hasFound;
         for (auto & str : L) toFind[str]++;
         int N = S.size(), M = L.size(), K = L[0].size();
-        for (int k = 0; k < K; k++) {
+        for (int i = 0; i < K; i++) {
             hasFound.clear();
             int cnt = 0;
-            for (int begin = k, end = k; end < N; end += K) {
+            for (int begin = i, end = i; end < N; end += K) {
                 if (!toFind.count(S.substr(end, K))) hasFound.clear(), cnt = 0, begin = end + K;
                 else if (hasFound[S.substr(end, K)] < toFind[S.substr(end, K)]) hasFound[S.substr(end, K)]++, cnt++;
                 else {
@@ -78,7 +79,16 @@ int main() {
 
     {
         p0 = "barfoothefoobarman";
-        string a[] = {"foo", "bar"};
+        string a[] = { "foo", "bar" };
+        p1.assign(begin(a), end(a));
+        auto p2 = sol.findSubstring(p0, p1);
+        for (auto it : p2) cout << it << " ";
+        cout << endl;
+    }
+
+    {
+        p0 = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
+        string a[] = { "fooo", "barr", "wing", "ding", "wing" };
         p1.assign(begin(a), end(a));
         auto p2 = sol.findSubstring(p0, p1);
         for (auto it : p2) cout << it << " ";

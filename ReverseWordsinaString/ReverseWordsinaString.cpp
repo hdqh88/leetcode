@@ -48,7 +48,8 @@ public:
 
     void reverseWords2(string &s) {
         string res;
-        for (int i = s.length() - 1; i >= 0;) {
+        int i = s.size() - 1;
+        while (i >= 0) {
             while (i >= 0 && s[i] == ' ') i--;
             if (i < 0) break;
             if (!res.empty()) res.push_back(' ');

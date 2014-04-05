@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <regex>
 
 using namespace std;
 
@@ -46,6 +47,10 @@ int table[9][6] = {
 class Solution {
 public:
     bool isNumber(const char *s) {
+        return isNumber2(s);
+    }
+
+    bool isNumber1(const char *s) {
         Type type = Type::Invalid;
         int state = 0;
         for (; *s != '\0'; s++) {
@@ -59,6 +64,11 @@ public:
             if (state == -1) return false;
         }
         return (state == 2 || state == 4 || state == 7 || state == 8);
+    }
+
+    bool isNumber2(const char *s) {
+        regex r("^\\s*[+-]?(\\d+|\\d*\\.\\d+|\\d+\\.\\d*)([eE][+-]?\\d+)?\\s*$");
+        return regex_match(s, r);
     }
 };
 

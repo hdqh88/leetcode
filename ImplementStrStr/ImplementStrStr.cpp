@@ -36,28 +36,24 @@ public:
         return NULL;
     }
 
-    int mod(int a, int b) {
-        return (a % b + b) % b;
+    int mod(int a) {
+        return (a % M + M) % M;
     }
 
     char *strStr2(char *haystack, char *needle) {
         if (haystack == NULL || needle == NULL) return NULL;
         int n = strlen(haystack), m = strlen(needle);
-        int hn = 0;
-        for (int i = 0; i < m; i++) hn = mod(hn*B + needle[i], M);
         int hh = 0;
-        for (int i = 0; i < m; i++) hh = mod(hh*B + haystack[i], M);
+        for (int i = 0; i < m; i++) hh = mod(mod(hh * B) + haystack[i]);
+        int hn = 0;
+        for (int i = 0; i < m; i++) hn = mod(mod(hn * B) + needle[i]);
         if (hh == hn) return haystack;
-        int E = 1; // E = B^(m-1)
-        for (int i = 1; i < m; i++) E = mod(E*B, M);
+        int E = 1;
+        for (int i = 1; i < m; i++) E = mod(E * B);
         for (int i = m; i < n; i++) {
-            hh = mod(hh - mod(haystack[i - m] * E, M), M);
-            hh = mod(hh*B + haystack[i], M);
-            if (hh == hn) {
-                int j = 0;
-                while (j < m && haystack[i + j] == needle[j]) j++;
-                return haystack + i - m + 1;
-            }
+            hh = mod(hh - mod(haystack[i - m] * E));
+            hh = mod(mod(hh * B) + haystack[i]);
+            if (hh == hn) return haystack + i - m + 1;
         }
         return NULL;
     }
@@ -71,8 +67,8 @@ public:
             int j = fs[i - 1];
             while (true) {
                 if (needle[j] == needle[i - 1]) { fs[i] = j + 1; break; }
-                if (j == 0) { break; }
-                j = fs[j];
+                else if (j == 0) break;
+                else j = fs[j];
             }
         }
         int n = strlen(haystack), i = 0, j = 0;
@@ -81,8 +77,8 @@ public:
                 i++, j++;
                 if (j == m) return haystack + i - m;
             }
-            else if (j > 0) j = fs[j];
-            else i++;
+            else if (j == 0) i++;
+            else j = fs[j];
         }
         return NULL;
     }

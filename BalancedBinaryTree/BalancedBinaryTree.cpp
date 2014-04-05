@@ -42,15 +42,22 @@ public:
         return max(height(cur->left), height(cur->right)) + 1;
     }
 
-    bool isBalanced2(TreeNode * root) {
-        return (isBalancedHelper(root) >= 0);
+    bool isBalanced2(TreeNode *root) {
+        int depth;
+        return check(root, depth);
     }
 
-    int isBalancedHelper(TreeNode *cur) {
-        if (cur == NULL) return 0;
-        int lh = isBalancedHelper(cur->left), rh = isBalancedHelper(cur->right);
-        if (lh == -1 || rh == -1 || abs(lh - rh) > 1) return -1;
-        return max(lh, rh) + 1;
+    bool check(TreeNode * root, int & depth) {
+        if (root == NULL) {
+            depth = 0;
+            return true;
+        }
+        int ld, rd;
+        if (!check(root->left, ld)) return false;
+        if (!check(root->right, rd)) return false;
+        depth = max(ld, rd) + 1;
+        return abs(ld - rd) <= 1;
+
     }
 };
 
