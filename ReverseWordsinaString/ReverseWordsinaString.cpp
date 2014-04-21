@@ -37,7 +37,6 @@ public:
         vector<string> vs;
         while (is >> word) vs.push_back(word);
         reverse(begin(vs), end(vs));
-        s.clear();
         ostringstream os;
         for (int i = 0; i < vs.size(); i++) {
             if (i != 0) os << " ";
@@ -52,10 +51,10 @@ public:
         while (i >= 0) {
             while (i >= 0 && s[i] == ' ') i--;
             if (i < 0) break;
-            if (!res.empty()) res.push_back(' ');
             string tmp;
             while (i >= 0 && s[i] != ' ') tmp.push_back(s[i--]);
             reverse(tmp.begin(), tmp.end());
+            if (!res.empty()) res.push_back(' ');
             res.append(tmp);
         }
         s = res;

@@ -39,7 +39,7 @@ public:
         vector<Interval> res;
         bool done = false;
         for (auto cur : intervals) {
-            if (cur.start <= newInterval.end && cur.end >= newInterval.start) {
+            if (cur.start <= newInterval.end && newInterval.start <= cur.end) {
                 newInterval.start = min(newInterval.start, cur.start);
                 newInterval.end = max(newInterval.end, cur.end);
             }

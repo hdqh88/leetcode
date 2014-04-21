@@ -47,7 +47,7 @@ int table[9][6] = {
 class Solution {
 public:
     bool isNumber(const char *s) {
-        return isNumber2(s);
+        return isNumber3(s);
     }
 
     bool isNumber1(const char *s) {
@@ -69,6 +69,47 @@ public:
     bool isNumber2(const char *s) {
         regex r("^\\s*[+-]?(\\d+|\\d*\\.\\d+|\\d+\\.\\d*)([eE][+-]?\\d+)?\\s*$");
         return regex_match(s, r);
+    }
+
+    bool isNumber3(const char *s) {
+        if (s == NULL) return false;
+        skipWhiteSpaces(s);
+        skipSign(s);
+        bool b1 = skipDigits(s);
+        skipDot(s);
+        bool b2 = skipDigits(s);
+        if (!b1 && !b2) return false;
+        if (skipExp(s)) {
+            skipSign(s);
+            if (!skipDigits(s)) return false;
+        }
+        skipWhiteSpaces(s);
+        return  *s == '\0';
+    }
+
+private:
+    void skipWhiteSpaces(const char *& s) {
+        while (*s != '\0' && isspace(*s)) s++;
+    }
+
+    void skipSign(const char *& s) {
+        if (*s != '\0' && (*s == '+' || *s == '-')) s++;
+    }
+
+    void skipDot(const char *& s) {
+        if (*s != '\0' && (*s == '.')) s++;
+    }
+
+    int skipDigits(const char *& s) {
+        bool res = false;
+        while (*s != '\0' && isdigit(*s)) s++, res = true;
+        return res;
+    }
+
+    bool skipExp(const char *& s) {
+        bool res = false;
+        if (*s != '\0' && (*s == 'e' || *s == 'E')) s++, res = true;
+        return res;
     }
 };
 

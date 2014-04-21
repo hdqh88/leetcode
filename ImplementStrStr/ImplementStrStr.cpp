@@ -43,16 +43,14 @@ public:
     char *strStr2(char *haystack, char *needle) {
         if (haystack == NULL || needle == NULL) return NULL;
         int n = strlen(haystack), m = strlen(needle);
-        int hh = 0;
-        for (int i = 0; i < m; i++) hh = mod(mod(hh * B) + haystack[i]);
-        int hn = 0;
-        for (int i = 0; i < m; i++) hn = mod(mod(hn * B) + needle[i]);
+        int hh = 0, hn = 0;
+        for (int i = 0; i < m; i++) hh = mod(mod(hh * B) + haystack[i]), hn = mod(mod(hn * B) + needle[i]);
         if (hh == hn) return haystack;
         int E = 1;
         for (int i = 1; i < m; i++) E = mod(E * B);
         for (int i = m; i < n; i++) {
             hh = mod(hh - mod(haystack[i - m] * E));
-            hh = mod(mod(hh * B) + haystack[i]);
+            hh = mod(haystack[i] + mod(hh * B));
             if (hh == hn) return haystack + i - m + 1;
         }
         return NULL;

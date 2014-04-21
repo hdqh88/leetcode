@@ -24,17 +24,16 @@ public:
     bool wordBreak(string s, unordered_set<string> &dict) {
         if (s.empty()) return false;
         int N = s.size();
-        vector<bool> dp(N + 1, false);
-        dp[0] = true;
-        for (int j = 1; j <= N; j++) {
-            for (int i = 0; i < j; i++) {
-                if (dict.count(s.substr(i, j - i)) && dp[i]) {
+        vector<bool> dp(N, false);
+        for (int j = 0; j < N; j++) {
+            for (int i = 0; i <= j; i++) {
+                if ((i == 0 || dp[i - 1]) && dict.count(s.substr(i, j - i + 1))) {
                     dp[j] = true;
                     break;
                 }
             }
         }
-        return dp[N];
+        return dp[N - 1];
     }
 };
 

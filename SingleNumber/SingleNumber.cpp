@@ -21,5 +21,8 @@ public:
 };
 
 int main() {
+    Solution sol;
+    int A[] = { 1, 1, 2, 3, 3, 4, 4 };
+    cout << sol.singleNumber(A, sizeof(A) / sizeof(int)) << endl;
     return 0;
 }

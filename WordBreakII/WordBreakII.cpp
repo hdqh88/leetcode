@@ -25,58 +25,56 @@ using namespace std;
 class Solution {
 public:
     vector<string> wordBreak(string s, unordered_set<string> &dict) {
-        return wordBreak1(s, dict);
+        return wordBreak2(s, dict);
     }
 
-    vector<string> wordBreak1(string & s, unordered_set<string> &dict) {
+    vector<string> wordBreak1(string s, unordered_set<string> &dict) {
         int N = s.size();
-        vector<vector<int> > dp(N + 1, vector<int>());
-        dp[0].push_back(0);
-        for (int i = 1; i <= N; i++) {
-            for (int j = 0; j < i; j++) {
-                if (!dp[j].empty() && dict.count(s.substr(j, i - j))) {
-                    dp[i].push_back(j);
-                }
+        vector<vector<int> > dp(N, vector<int>());
+        for (int j = 0; j < N; j++) {
+            for (int i = 0; i <= j; i++) {
+                if ((i == 0 || !dp[i - 1].empty()) && dict.count(s.substr(i, j - i + 1))) dp[j].push_back(i);
             }
         }
-
-        vector<vector<string> > memo(N + 1, vector<string>());
-        return wordBreakHelper1(s, dp, memo, N);
+        vector<vector<string> > memo(N, vector<string>());
+        return go(s, N - 1, dp, memo);
     }
 
-    vector<string> wordBreakHelper1(string & s, vector<vector<int> > & dp, vector<vector<string> > & memo, int i) {
-        if (!memo[i].empty()) return memo[i];
-        for (int j : dp[i]) {
-            if (j == 0) {
-                memo[i].push_back(s.substr(0, i));
-                continue;
+    vector<string> go(string & s, int j, vector<vector<int> > & dp, vector<vector<string> > & memo) {
+        if (!memo[j].empty()) return memo[j];
+        for (int i : dp[j]) {
+            if (i == 0) {
+                memo[j].push_back(s.substr(i, j - i + 1));
             }
-            auto res = wordBreakHelper1(s, dp, memo, j);
-            for (auto & str : res) memo[i].push_back(str + " " + s.substr(j, i - j));
+            else {
+                auto ps = go(s, i - 1, dp, memo);
+                for (auto & p : ps) memo[j].push_back(p + " " + s.substr(i, j - i + 1));
+            }
         }
-        return memo[i];
+        return memo[j];
     }
 
     vector<string> wordBreak2(string s, unordered_set<string> &dict) {
         vector<string> res;
         if (s.empty()) return res;
         int N = s.size();
-        vector<vector<int> > dp1(N + 1, vector<int>());
-        dp1[0].push_back(0);
-        for (int j = 0; j <= N; j++) {
-            for (int i = 0; i < j; i++) {
-                if (!dp1[i].empty() && dict.count(s.substr(i, j - i))) dp1[j].push_back(i);
+        vector<vector<int> > dp1(N, vector<int>());
+        for (int j = 0; j < N; j++) {
+            for (int i = 0; i <= j; i++) {
+                if ((i == 0 || !dp1[i - 1].empty()) && dict.count(s.substr(i, j - i + 1))) dp1[j].push_back(i);
             }
         }
-        if (dp1[N].empty()) return res;
+        if (dp1[N-1].empty()) return res;
         vector<vector<string> > dp2(N + 1, vector<string>());
-        for (int j = 0; j <= N; j++) {
+        for (int j = 0; j < N; j++) {
             for (int i : dp1[j]) {
-                if (i == 0) dp2[j].push_back(s.substr(i, j - i));
-                else for (auto & str : dp2[i]) dp2[j].push_back(str + " " + s.substr(i, j - i));
+                if (i == 0) {
+                    dp2[j].push_back(s.substr(i, j - i + 1)); continue;
+                }
+                for (auto & p : dp2[i-1]) dp2[j].push_back(str + " " + s.substr(i, j - i + 1));
             }
         }
-        return dp2[N];
+        return dp2[N-1];
     }
 };
 

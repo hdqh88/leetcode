@@ -39,14 +39,13 @@ public:
     ListNode *mergeKLists(vector<ListNode *> &lists) {
         auto it = lists.begin();
         while (it != lists.end()) it = *it ? it + 1 : lists.erase(it);
-        auto cmp = [](ListNode * p, ListNode *q) { return p->val > q->val; };
+        auto cmp = [](ListNode * p, ListNode * q) { return p->val > q->val; };
         make_heap(lists.begin(), lists.end(), cmp);
-        ListNode *head = pushDummy(NULL), *cur = head, *next = NULL;
+        ListNode * head = pushDummy(NULL), *cur = head, *top = NULL;
         while (!lists.empty()) {
-            pop_heap(lists.begin(), lists.end(), cmp), next = lists.back(), lists.pop_back();
-            if (next->next != NULL) lists.push_back(next->next), push_heap(lists.begin(), lists.end(), cmp);
-            cur->next = next;
-            cur = cur->next;
+            pop_heap(lists.begin(), lists.end(), cmp), top = lists.back(), lists.pop_back();
+            if (top->next) lists.push_back(top->next), push_heap(lists.begin(), lists.end(), cmp);
+            cur->next = top, cur = cur->next;
         }
         return popDummy(head);
     }

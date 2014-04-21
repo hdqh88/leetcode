@@ -27,8 +27,8 @@ public:
         for (int i = 0; i <= n1; i++) {
             for (int j = 0; j <= n2; j++) {
                 if (i == 0 && j == 0) dp[i][j] = true;
-                else if (i != 0 && s1[i - 1] == s3[i + j - 1] && dp[i - 1][j]) dp[i][j] = true;
-                else if (j != 0 && s2[j - 1] == s3[i + j - 1] && dp[i][j - 1]) dp[i][j] = true;
+                if (i != 0 && s1[i - 1] == s3[i + j - 1] && dp[i - 1][j]) dp[i][j] = true;
+                if (j != 0 && s2[j - 1] == s3[i + j - 1] && dp[i][j - 1]) dp[i][j] = true;
             }
         }
         return dp[n1][n2];
