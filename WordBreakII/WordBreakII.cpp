@@ -25,10 +25,6 @@ using namespace std;
 class Solution {
 public:
     vector<string> wordBreak(string s, unordered_set<string> &dict) {
-        return wordBreak2(s, dict);
-    }
-
-    vector<string> wordBreak1(string s, unordered_set<string> &dict) {
         int N = s.size();
         vector<vector<int> > dp(N, vector<int>());
         for (int j = 0; j < N; j++) {
@@ -52,29 +48,6 @@ public:
             }
         }
         return memo[j];
-    }
-
-    vector<string> wordBreak2(string s, unordered_set<string> &dict) {
-        vector<string> res;
-        if (s.empty()) return res;
-        int N = s.size();
-        vector<vector<int> > dp1(N, vector<int>());
-        for (int j = 0; j < N; j++) {
-            for (int i = 0; i <= j; i++) {
-                if ((i == 0 || !dp1[i - 1].empty()) && dict.count(s.substr(i, j - i + 1))) dp1[j].push_back(i);
-            }
-        }
-        if (dp1[N-1].empty()) return res;
-        vector<vector<string> > dp2(N + 1, vector<string>());
-        for (int j = 0; j < N; j++) {
-            for (int i : dp1[j]) {
-                if (i == 0) {
-                    dp2[j].push_back(s.substr(i, j - i + 1)); continue;
-                }
-                for (auto & p : dp2[i-1]) dp2[j].push_back(str + " " + s.substr(i, j - i + 1));
-            }
-        }
-        return dp2[N-1];
     }
 };
 
