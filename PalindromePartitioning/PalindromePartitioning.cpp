@@ -26,40 +26,7 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<string> > partition(string s) {
-        return partition2(s);
-    }
-
-    vector<vector<string> > partition1(string & s) {
-        int N = s.size();
-        vector<vector<bool> > dp1(N, vector<bool>(N, false));
-        for (int j = 0; j < N; j++) {
-            for (int i = 0; i <= j; i++) {
-                if (s[i] == s[j] && (j - i < 2 || dp1[i + 1][j - 1])) dp1[i][j] = true;
-            }
-        }
-        vector<vector<vector<string> > > dp2(N, vector<vector<string> >());
-        return go(s, N - 1, dp1, dp2);
-    }
-
-    vector<vector<string> > go(string & s, int j, vector<vector<bool> > & dp1, vector<vector<vector<string> > > & dp2) {
-        if (!dp2[j].empty()) return dp2[j];
-        vector<vector<string> > res;
-        for (int i = 0; i <= j; i++) {
-            if (!dp1[i][j]) continue;
-            if (i == 0) res.push_back(vector<string>(1, s.substr(i, j - i + 1)));
-            else {
-                auto ps = go(s, i - 1, dp1, dp2);
-                for (auto & p : ps) {
-                    p.push_back(s.substr(i, j - i + 1));
-                    res.push_back(p);
-                }
-            }
-        }
-        return dp2[j] = res;
-    }
-
-    vector<vector<string> > partition2(string & s) {
+    vector<vector<string> > partition(string & s) {
         int N = s.size();
         vector<vector<bool> > dp1(N, vector<bool>(N, false));
         vector<vector<vector<string> > > dp2(N, vector<vector<string> >());

@@ -1,10 +1,7 @@
 //============================================================================
-// Sort List 
+// Sort List
 // Sort a linked list in O(n log n) time using constant space complexity.
 //============================================================================
-
-#include <iostream>
-using namespace std;
 
 /**
  * Definition for singly-linked list.
@@ -20,29 +17,20 @@ class ListNode {
 }
 
 public class Solution {
-    class Pair {
-        ListNode frontHead;
-        ListNode backHead;
-        Pair(ListNode f, ListNode b) {
-            frontHead = f;
-            backHead = b;
-        }
-    }
-
     public ListNode sortList(ListNode head) {
         return mergeSort(head);
     }
 
     private ListNode mergeSort(ListNode head) {
         if (head == null || head.next == null) return head;
-        Pair splited = split(head);
-        splited.frontHead = mergeSort(splited.frontHead);
-        splited.backHead = mergeSort(splited.backHead);
+        ListNode[] splited = split(head);
+        splited[0] = mergeSort(splited[0]);
+        splited[1] = mergeSort(splited[1]);
         return merge(splited);
     }
 
-    private ListNode merge(Pair splitted) {
-        ListNode frontNode = splitted.frontHead, backNode = splitted.backHead;
+    private ListNode merge(ListNode[] splitted) {
+        ListNode frontNode = splitted[0], backNode = splitted[1];
         ListNode head = new ListNode(-1), curNode = head;
         while (frontNode != null || backNode != null) {
             if (backNode == null || (frontNode!= null && frontNode.val < backNode.val)) {
@@ -59,7 +47,7 @@ public class Solution {
         return head.next;
     }
 
-    private Pair split(ListNode head) {
+    private ListNode[] split(ListNode head) {
         ListNode firstHead = new ListNode(-1), frontNode = firstHead;
         ListNode backHead = new ListNode(-1), backNode = backHead;
         while (head != null) {
@@ -74,7 +62,7 @@ public class Solution {
         }
         frontNode.next = null;
         backNode.next = null;
-        return new Pair(firstHead.next, backHead.next);
+        return new ListNode[]{firstHead.next, backHead.next};
     }
 
     private static void print(ListNode head) {

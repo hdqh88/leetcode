@@ -50,27 +50,18 @@ public class Solution {
 
     private void reorderList2(ListNode head) {
         if (head == null || head.next == null) return;
-        Pair splitted = split(head);
-        splitted.backHead = reverse(splitted.backHead);
+        ListNode[] splitted = split(head);
+        splitted[1] = reverse(splitted[1]);
         merge(splitted);
     }
 
-    class Pair {
-        ListNode frontHead;
-        ListNode backHead;
-        Pair(ListNode f, ListNode b) {
-            frontHead = f;
-            backHead = b;
-        }
-    }
-
-    private Pair split(ListNode head) {
+    private ListNode[] split(ListNode head) {
         ListNode frontNode = head, backNode = head;
-        for (; backNode.next != null && backNode.next.next != null; backNode = backNode.next.next) {
-            frontNode = frontNode.next;
+        for (; frontNode.next != null && frontNode.next.next != null; frontNode = frontNode.next.next) {
+            backNode = backNode.next;
         }
-        Pair res = new Pair(head, frontNode.next);
-        frontNode.next = null;
+        ListNode[] res = new ListNode[]{head, backNode.next};
+        backNode.next = null;
         return res;
     }
 
@@ -85,18 +76,18 @@ public class Solution {
         return preNode;
     }
 
-    private void merge(Pair splitted) {
-        ListNode frontNode = splitted.frontHead, backNode = splitted.backHead;
+    private void merge(ListNode[] splitted) {
+        ListNode backNode = splitted[0], frontNode = splitted[1];
         ListNode head = new ListNode(-1), curNode = head;
-        while (frontNode != null || backNode != null) {
-            if (frontNode != null) {
-                curNode.next = frontNode;
-                frontNode = frontNode.next;
-                curNode = curNode.next;
-            }
+        while (backNode != null || frontNode != null) {
             if (backNode != null) {
                 curNode.next = backNode;
                 backNode = backNode.next;
+                curNode = curNode.next;
+            }
+            if (frontNode != null) {
+                curNode.next = frontNode;
+                frontNode = frontNode.next;
                 curNode = curNode.next;
             }
         }
