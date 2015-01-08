@@ -29,7 +29,7 @@ public class Solution {
         }  
         else  
         {  
-            l++;  
+            l+;  
         }  
     }  
     min = Math.min(num[u],min);  
