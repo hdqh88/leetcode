@@ -1,5 +1,5 @@
 //========================================================================================================================
-//
+//http://www.cnblogs.com/EdwardLiu/p/4207498.html
 //Given an integer n, return the number of trailing zeroes in n!.
 //
 //Note: Your solution should be in logarithmic time complexity.
