@@ -28,63 +28,63 @@
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
-{
-  int c1 = getCount(headA);
-  int c2 = getCount(headB);
-  int d;
+    {
+        int c1 = getCount(headA);
+        int c2 = getCount(headB);
+        int d;
  
-  if(c1 > c2)
-  {
-    d = c1 - c2;
-    return _getIntesectionNode(d, headA, headB);
-  }
-  else
-  {
-    d = c2 - c1;
-    return _getIntesectionNode(d, headB, headA);
-  }
-}
+        if(c1 > c2)
+        {
+            d = c1 - c2;
+            return _getIntesectionNode(d, headA, headB);
+        }
+        else
+        {
+            d = c2 - c1;
+            return _getIntesectionNode(d, headB, headA);
+        }
+    }
  
 /* function to get the intersection point of two linked
    lists head1 and head2 where head1 has d more nodes than
    head2 */
-public ListNode _getIntesectionNode(int d, ListNode headA, ListNode headB)
-{
-  int i;
-  ListNode current1 = headA;
-  ListNode current2 = headB;
+    public ListNode _getIntesectionNode(int d, ListNode headA, ListNode headB)
+    {
+        int i;
+        ListNode current1 = headA;
+        ListNode current2 = headB;
  
-  for(i = 0; i < d; i++)
-  {
-    if(current1 == null)
-    {  return null; }
-    current1 = current1.next;
-  }
+        for(i = 0; i < d; i++)
+        {
+            if(current1 == null)
+            {return null;}
+            current1 = current1.next;
+        }
  
-  while(current1 !=  null && current2 != null)
-  {
-    if(current1 == current2)
-      return current1;
-    current1= current1.next;
-    current2= current2.next;
-  }
+        while(current1 !=  null && current2 != null)
+        {
+            if(current1 == current2)
+            return current1;
+            current1= current1.next;
+            current2= current2.next;
+        }
  
-  return null;
-}
+        return null;
+    }
  
 /* Takes head pointer of the linked list and
    returns the count of nodes in the list */
-public int getCount(ListNode head)
-{
-  ListNode current = head;
-  int count = 0;
+    public int getCount(ListNode head)
+    {
+        ListNode current = head;
+        int count = 0;
  
-  while (current != null)
-  {
-    count++;
-    current = current.next;
-  }
+        while (current != null)
+        {
+            count++;
+            current = current.next;
+        }
  
-  return count;
-}
+        return count;
+    }
 }
