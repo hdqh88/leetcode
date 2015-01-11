@@ -5,7 +5,18 @@
 //
 //T is "ece" which its length is 3.
 //=============================================================================================================================
-
+/*The trick is to maintain a sliding window that always satisfies the invariant where there
+are always at most two distinct characters in it. When we add a new character that breaks
+this invariant, how can we move the begin pointer to satisfy the invariant? Using the
+above example, our first window is the substring “abba”. When we add the character ‘c’
+into the sliding window, it breaks the invariant. Therefore, we have to readjust the
+window to satisfy the invariant again. The question is which starting point to choose so
+the invariant is satisfied.
+Let’s look at another example where S = “abaac”. We found our first window “abaa”.
+When we add ‘c’ to the window, the next sliding window should be “aac”.
+This method iterates n times and therefore its runtime complexity is O(n). We use three
+pointers: i, j, and k.
+*/
 public class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
 int i = 0, j = -1, maxLen = 0;
