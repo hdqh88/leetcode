@@ -13,22 +13,22 @@ class Solution {
 public:
     int majorityElement(vector<int> &num) {
         
-    int maj_index = 0, count = 1;
-    int i;
-    for(i = 1; i < num.size(); i++)
-    {
-        if(num[maj_index] == num[i])
-            count++;
-        else
-            count--;
-        if(count == 0)
+        int maj_index = 0, count = 1;
+        int i;
+        for(i = 1; i < num.size(); i++)
         {
-            maj_index = i;
-            count = 1;
+            if(num[maj_index] == num[i])
+                count++;
+            else
+                count--;
+            if(count == 0)
+            {
+                maj_index = i;
+                count = 1;
+            }
         }
+        return num[maj_index];
     }
-    return num[maj_index];
-}
   
 
 };
