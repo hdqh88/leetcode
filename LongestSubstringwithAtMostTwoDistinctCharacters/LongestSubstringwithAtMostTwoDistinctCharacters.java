@@ -19,28 +19,28 @@ pointers: i, j, and k.
 */
 public class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
-int i = 0, j = -1, maxLen = 0;
-for (int k = 1; k < s.length(); k++) {
-if (s.charAt(k) == s.charAt(k - 1)) continue;
-if (j >= 0 && s.charAt(j) != s.charAt(k)) {
-maxLen = Math.max(k - i, maxLen);
-i = j + 1;
-}
-j = k - 1;
-}
-return Math.max(s.length() - i, maxLen);
-}
+        int i = 0, j = -1, maxLen = 0;
+        for (int k = 1; k < s.length(); k++) {
+            if (s.charAt(k) == s.charAt(k - 1)) continue;
+            if (j >= 0 && s.charAt(j) != s.charAt(k)) {
+                maxLen = Math.max(k - i, maxLen);
+                i = j + 1;
+            }
+            j = k - 1;
+        }
+        return Math.max(s.length() - i, maxLen);
+    }
 }
 public int lengthOfLongestSubstring(String s) {
-int[] charMap = new int[256];
-Arrays.fill(charMap, -1);
-int i = 0, maxLen = 0;
-for (int j = 0; j < s.length(); j++) {
-if (charMap[s.charAt(j)] >= i) {
-i = charMap[s.charAt(j)] + 1;
-}
-charMap[s.charAt(j)] = j;
-maxLen = Math.max(j - i + 1, maxLen);
-}
-return maxLen;
+    int[] charMap = new int[256];
+    Arrays.fill(charMap, -1);
+    int i = 0, maxLen = 0;
+    for (int j = 0; j < s.length(); j++) {
+        if (charMap[s.charAt(j)] >= i) {
+            i = charMap[s.charAt(j)] + 1;
+        }
+        charMap[s.charAt(j)] = j;
+        maxLen = Math.max(j - i + 1, maxLen);
+    }
+    return maxLen;
 }
