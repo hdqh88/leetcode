@@ -14,33 +14,33 @@
 class Solution {
 public:
     int findPeakElement(const vector<int> &num) {
-    int startPt = 0;
-    int endPt = num.size() -1;
-    int midPt;
+        int startPt = 0;
+        int endPt = num.size() -1;
+        int midPt;
 
-    if(endPt < 0)
-    { // empty list
-        return -1;
-    }
-    else
-    {
-        while(startPt < endPt)
-        { // binary search, for each iteration, make sure num[startPt-1]< num[startPt] & num[endPt] > num[endPt+1] is true  
-            midPt = (endPt + startPt)/2;
-            if(num[midPt] < num[midPt + 1])
-            { 
-                startPt = midPt + 1;
+        if(endPt < 0)
+        { // empty list
+            return -1;
+        }
+        else
+        {
+            while(startPt < endPt)
+            { // binary search, for each iteration, make sure num[startPt-1]< num[startPt] & num[endPt] > num[endPt+1] is true  
+                midPt = (endPt + startPt)/2;
+                if(num[midPt] < num[midPt + 1])
+                { 
+                    startPt = midPt + 1;
+                }
+                else
+                {
+                    endPt = midPt;
+                }
             }
-            else
-            {
-                endPt = midPt;
-            }
+
+            return startPt;
+
         }
 
-        return startPt;
 
     }
-
-
-}
 };
