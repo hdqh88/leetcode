@@ -31,6 +31,10 @@ public class Solution {
         return Math.max(s.length() - i, maxLen);
     }
 }
+/*Although the above method works fine, it could not be easily generalized to the case
+where T contains at most k distinct characters.
+The key is when we adjust the sliding window to satisfy the invariant, we need a counter
+of the number of times each character appears in the substring.*/
 public int lengthOfLongestSubstringTwoDistinct(String s) {
     int[] count = new int[256];
     int i = 0, numDistinct = 0, maxLen = 0;
