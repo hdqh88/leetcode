@@ -22,14 +22,17 @@ using namespace std;
 class Solution {
 public:
     int searchInsert(int A[], int n, int target) {
-        int l = 0, u = n-1;
-        while (l < u) {
-            int m = l+(u-l)/2;
-            if (A[m] < target) l = m+1;
-            else u = m;
+        int start = 0, end = n-1;
+        while (start < end) {
+            int middle = start + (end - start)/2;
+            if (A[middle] < target) 
+                start = middle + 1;
+            else 
+                end = middle;
         }
-        if (A[u] < target) return n;
-        return u;
+        if (A[end] < target) 
+            return n;
+        return end;
     }
 };
 
