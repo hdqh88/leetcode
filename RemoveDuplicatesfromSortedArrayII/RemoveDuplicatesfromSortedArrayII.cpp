@@ -15,10 +15,14 @@
 class Solution {
 public:
     int removeDuplicates(int A[], int n) {
-        if (n < 3) return n;
-        int j = 2;
-        for (int i = 2; i < n; i++) if (A[j - 2] != A[i]) A[j++] = A[i];
-        return j;
+        int N = 2;
+        if(n <= N)
+            return n;
+        int index = N;
+        for(int i = N; i < n; i++)
+            if(A[index - N] != A[i])
+                A[index++] = A[i];
+        return index;
     }
 };
 
