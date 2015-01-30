@@ -41,19 +41,24 @@ struct TreeNode {
 class Solution {
 public:
     vector<vector<int> > pathSum(TreeNode *root, int sum) {
+        vector<vector<int> > result;
         vector<int> path;
-        vector<vector<int> > res;
-        pathSumHelper(root, sum, path, res);
-        return res;
+        dfs(root, sum, path, result);
+        return result;
     }
-
-    void pathSumHelper(TreeNode * cur, int sum, vector<int> & path, vector<vector<int> > & res) {
-        if (cur == NULL) return;
-        sum -= cur->val;
-        path.push_back(cur->val);
-        if (cur->left == NULL && cur->right == NULL && sum == 0) res.push_back(path);
-        pathSumHelper(cur->left, sum, path, res);
-        pathSumHelper(cur->right, sum, path, res);
+    
+    void dfs(TreeNode* p, int gap, vector<int>& path, vector<vector<int> >& result){
+        if(p == NULL)
+            return;
+        path.push_back(p->val);
+        if(p->left == NULL && p->right == NULL){
+            if(p->val == gap)
+                result.push_back(path);
+        }
+        else{
+            dfs(p->left, gap - p->val, path, result);
+            dfs(p->right, gap - p->val, path, result);
+        }
         path.pop_back();
     }
 };
