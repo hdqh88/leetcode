@@ -29,7 +29,7 @@ public:
     
     int removeDuplicates2(int A[], int n){
         int N = 2;
-        if(n < N)
+        if(n <= N)
             return n;
         int index = 0;
         int dup = 1;
