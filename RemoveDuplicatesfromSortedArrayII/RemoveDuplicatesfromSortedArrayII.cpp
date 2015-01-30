@@ -24,6 +24,27 @@ public:
                 A[index++] = A[i];
         return index;
     }
+    
+    
+    
+    int removeDuplicates2(int A[], int n){
+        int N = 2;
+        if(n < N)
+            return n;
+        int index = 0;
+        int dup = 1;
+        for(int i = 1; i < n; i++){
+            if(A[index] != A[i]){
+                A[++index] = A[i];
+                dup = 1;
+            }
+            else if(dup < N){
+                A[++index] = A[i];
+                dup++;
+            }
+        }
+        return index + 1;
+    }
 };
 
 int main() {
