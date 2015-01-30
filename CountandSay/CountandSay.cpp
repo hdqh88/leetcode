@@ -19,18 +19,29 @@ using namespace std;
 class Solution {
 public:
     string countAndSay(int n) {
-        string res = "1";
-        for (; n > 1; n--) {
-            ostringstream os;
-            int N = res.size();
-            for (int i = 0; i < N; i++) {
-                int cnt = 1;
-                while (i < N - 1 && res[i] == res[i + 1]) i++, cnt++;
-                os << cnt << res[i];
+        if(n <= 0)
+            return NULL;
+        string tmp;
+        string seq = "1";
+        int count;
+        for(int i = 1; i < n; i++){
+            count = 1;
+            for(int j = 1; j < seq.length(); j++){
+                if(seq[j] == seq[j - 1]){
+                    count++;
+                }
+                else{
+                    tmp.push_back(count + '0');
+                    tmp.push_back(seq[j - 1]);
+                    count = 1;
+                }
             }
-            res = os.str();
+            tmp.push_back(count + '0');
+            tmp.push_back(seq[seq.length() - 1]);
+            seq = tmp;
+            tmp = "";
         }
-        return res;
+        return seq;
     }
 };
 
