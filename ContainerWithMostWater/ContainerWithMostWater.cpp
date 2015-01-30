@@ -31,6 +31,26 @@ public:
         }
         return res;
     }
+    
+    
+    
+    // Hao Ding
+    int maxArea2(vector<int> &height){
+        if(height.size() < 2)
+            return 0;
+        int left = 0;
+        int right = height.size() - 1;
+        int area_max = INT_MIN;
+        while(left < right){
+            int area = min(height[right], height[left]) * (right - left);
+            area_max = max(area_max, area);
+            if(height[left] < height[right])
+                left++;
+            else
+                right--;
+        }
+        return area_max;
+    }
 };
 
 int main() {
