@@ -47,7 +47,7 @@ public:
     
     
     // Hao
-    vector<vector<int> > generateMatrix(int n) {
+    vector<vector<int> > generateMatrix2(int n) {
         vector<vector<int> > matrix(n, vector<int>(n));
         int begin = 0;
         int end = n - 1;
