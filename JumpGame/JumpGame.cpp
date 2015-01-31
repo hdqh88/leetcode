@@ -33,6 +33,17 @@ public:
         }
         return true;
     }
+    
+    
+    // Hao: DP
+    bool canJump2(int A[], int n) {
+        int max_i = 0;
+        for(int i = 1; i < n; i++){
+            max_i = max(max_i, A[i - 1]) - 1;
+            if(max_i < 0)
+                return false;
+        }
+    }
 };
 
 int main() {
