@@ -43,7 +43,36 @@ public:
         }
         return res;
     }
+    
+    
+    
+    // Hao
+    vector<vector<int> > generateMatrix(int n) {
+        vector<vector<int> > matrix(n, vector<int>(n));
+        int begin = 0;
+        int end = n - 1;
+        int num = 1;
+        int i, j;
+        while(begin < end){
+            for(j = begin; j < end; j++)
+                matrix[begin][j] = num++;
+            for(i = begin; i < end; i++)
+                matrix[i][end] = num++;
+            for(j = end; j > begin; j--)
+                matrix[end][j] = num++;
+            for(i = end; i > begin; i--)
+                matrix[i][begin] = num++;
+            begin++;
+            end--;
+        }
+        if(begin == end)
+            matrix[begin][begin] = num;
+        return matrix;
+    }
 };
+
+
+
 
 int main() {
     Solution sol;
