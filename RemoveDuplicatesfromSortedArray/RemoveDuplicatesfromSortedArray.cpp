@@ -23,6 +23,18 @@ public:
         for (int i = 1; i < n; i++) if (A[j - 1] != A[i]) A[j++] = A[i];
         return j;
     }
+    
+   // Hao
+   int removeDuplicates2(int A[], int n) {
+       if(n <= 1)
+            return n;
+        int index = 0;
+        for(int i = 0; i < n; i++){
+            if(A[i] != A[index])
+                A[++index] = A[i];
+        }
+        return index + 1;
+   } 
 };
 
 int main() {
