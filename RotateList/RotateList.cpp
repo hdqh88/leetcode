@@ -34,6 +34,29 @@ public:
         curNode->next = NULL;
         return head;
     }
+    
+    
+    // Hao
+    ListNode *rotateRight2(ListNode *head, int k) {
+        if(head == NULL || k == 0)
+            return head;
+        int len = 1;
+        ListNode *p = head;
+        while(p -> next){
+            p = p -> next;
+            len++;
+        }
+        k = len - k % len;
+        if(k == len)
+            return head;
+        p -> next = head;
+        
+        for(int i = 0; i < k; i++)
+            p = p -> next;
+        head = p -> next;
+        p -> next = NULL;
+        return head;
+    }
 };
 
 int main() {
