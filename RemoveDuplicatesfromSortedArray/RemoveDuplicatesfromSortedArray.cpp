@@ -29,7 +29,7 @@ public:
        if(n <= 1)
             return n;
         int index = 0;
-        for(int i = 0; i < n; i++){
+        for(int i = 1; i < n; i++){
             if(A[i] != A[index])
                 A[++index] = A[i];
         }
