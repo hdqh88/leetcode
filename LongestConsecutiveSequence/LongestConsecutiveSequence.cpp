@@ -36,6 +36,33 @@ public:
         int nr = r + tb[r] - 1;
         return tb[nl] = tb[nr] = nr - nl + 1;
     }
+    
+    
+    // Hao
+    int longestConsecutive(vector<int> &num) {
+        unordered_map<int, bool> visit;
+        for(int i = 0; i < num.size(); i++)
+            visit[num[i]] = false;
+        int longest = 0;
+        for(int i = 0; i < num.size(); i++){
+            if(visit[num[i]])
+                continue;
+            int len = 1;
+            visit[num[i]] = true;
+            for(int j = num[i] + 1; visit.count(j); j++){
+                len++;
+                visit[j] = true;
+            }
+            for(int j = num[i] - 1; visit.count(j); j--){
+                len++;
+                visit[j] = true;
+            }
+            longest = max(len, longest);
+        }
+        return longest;
+    }
+    
+    
 };
 
 int main() {
