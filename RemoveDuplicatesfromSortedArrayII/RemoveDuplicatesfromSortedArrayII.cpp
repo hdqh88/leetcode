@@ -26,7 +26,7 @@ public:
     }
     
     
-    
+    // Hao
     int removeDuplicates2(int A[], int n){
         int N = 2;
         if(n <= N)
