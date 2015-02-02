@@ -21,6 +21,25 @@ public:
     bool isPalindrome(string s) {
         return isPalindrome2(s);
     }
+    
+    
+    // Hao
+    bool isPalindrome0(string s) {
+        int len = s.size();
+        int start = 0;
+        int end = len - 1;
+        while(start < end){
+            if(!isalnum(s[start]))
+                start++;
+            else if(!isalnum(s[end]))
+                end--;
+            else if(tolower(s[start++]) != tolower(s[end--]))
+                return false;
+        }
+        return true;
+    }
+    
+    
 
     bool isPalindrome1(string & s) {
         string str;
