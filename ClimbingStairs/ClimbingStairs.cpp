@@ -15,6 +15,25 @@ public:
     int climbStairs(int n) {
         return climbStairs3(n);
     }
+    
+    
+    
+    // Hao
+    int climbStairs0(int n){
+        if(n < 0)
+            return 0;
+        if(n <= 2)
+            return n;
+        int pre = 1;
+        int cur = 2;
+        for(int i = 3; i <= n; i++){
+            cur += pre;
+            pre = cur - pre;
+        }
+        return cur;
+    }
+
+
 
     int climbStairs1(int n) {
         vector<int> dp(n + 1, 0);
