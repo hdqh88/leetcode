@@ -47,6 +47,27 @@ public:
         delete toDel;
         return curNode;
     }
+    
+    
+    
+    // Hao
+    ListNode *partition2(ListNode *head, int x) {
+        if(head == NULL || head -> next == NULL)
+            return head;
+        ListNode *low = new ListNode(0);
+        ListNode *result_low = low;
+        ListNode *high = new ListNode(0);
+        ListNode *result_high = high;
+        for(; head != NULL; head = head -> next){
+            if(head -> val < x)
+                low = low -> next = head;
+            else
+                high = high -> next = head;
+        }
+        high -> next = NULL;
+        low -> next = result_high -> next;
+        return result_low -> next;
+    }
 };
 
 int main() {
