@@ -40,6 +40,7 @@ public:
         }
     }
 
+    // Hao
     void setZeroes2(vector<vector<int> > &matrix) {
         int M = matrix.size(), N = matrix[0].size();
         int fr = 1;
