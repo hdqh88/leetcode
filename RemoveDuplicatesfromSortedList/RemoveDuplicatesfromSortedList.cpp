@@ -38,6 +38,20 @@ public:
         }
         return  head;
     }
+    
+    
+    // Hao
+    ListNode *deleteDuplicates2(ListNode *head) {
+        if(head == NULL || head->next == NULL)
+            return head;
+        ListNode *p = head;
+        for(ListNode *q = p->next; q != NULL; q = q->next){
+            if(p->val != q->val)
+                p = p->next = q;
+        }
+        p->next = NULL;
+        return head;
+    }
 };
 
 int main() {
