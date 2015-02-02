@@ -41,6 +41,27 @@ public:
     ListNode *swapPairs(ListNode *head) {
         return swapPairs2(head);
     }
+    
+    
+    
+    // Hao
+    ListNode *swapPairs0(ListNode *head) {
+        if(head == NULL || head -> next == NULL)
+            return head;
+        ListNode *result = new ListNode(0);
+        result -> next = head;
+        ListNode *p = result;
+        while(p->next != NULL && p->next->next != NULL){
+            ListNode *q = p->next->next;
+            p->next->next = q->next;
+            q->next = p->next;
+            p->next = q;
+            p = p->next->next;
+        }
+        return result->next;
+    }
+    
+    
 
     ListNode * swapPairs1(ListNode *curNode) {
         if (curNode == NULL || curNode->next == NULL) return curNode;
