@@ -54,6 +54,35 @@ public:
         }
         return popHead(head);
     }
+    
+    
+    
+    // Hao
+    ListNode *deleteDuplicates2(ListNode *head) {
+        if(head == NULL || head -> next == NULL)
+            return head;
+        ListNode *result = new ListNode(0);
+        result -> next = head;
+        ListNode *p = result;
+        ListNode *q;
+        int duplicate = 0;
+        for(q = head; q->next != NULL; q = q -> next){
+            if(q->val == q->next->val)
+                duplicate = 1;
+            else if(duplicate){
+                p->next = q->next;
+                duplicate = 0;
+            }
+            else
+                p = p->next;
+        }
+        if(duplicate)
+            p->next = NULL;
+        return result->next;
+    }
+    
+    
+    
 };
 
 
