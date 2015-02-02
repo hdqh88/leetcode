@@ -54,6 +54,28 @@ public:
         slowNode->next = popHead(slowNode->next)
         return popHead(head);
     }
+    
+    
+    
+    // Hao
+    ListNode *removeNthFromEnd2(ListNode *head, int n) {
+        if(n == 0)
+            return head;
+        ListNode *result = new ListNode(0);
+        result->next = head;
+        ListNode *p = result;
+        int num = 0;
+        for(ListNode *q = head; q != NULL; q = q->next){
+            if(num < n)
+                num++;
+            else
+                p = p->next;
+        }
+        p->next = p->next->next;
+        return result->next;
+    }
+    
+    
 };
 
 int main() {
