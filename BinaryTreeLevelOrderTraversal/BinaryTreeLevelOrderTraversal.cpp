@@ -42,6 +42,41 @@ public:
     vector<vector<int> > levelOrder(TreeNode * root) {
         return levelOrder1(root);
     }
+    
+    
+    // Hao
+    vector<vector<int> > levelOrder0(TreeNode * root) {
+        vector<vector<int> > result;
+        queue<TreeNode *> que;
+        int curr = 0;
+        int next = 0;
+        if(root){
+            que.push(root);
+            curr++;
+        }
+        while(curr){
+            vector<int> level;
+            while(curr--){
+                TreeNode *p = que.front();
+                level.push_back(p->val);
+                que.pop();
+                if(p->left){
+                    que.push(p->left);
+                    next++;
+                }
+                if(p->right){
+                    que.push(p->right);
+                    next++;
+                }
+            }
+            result.push_back(level);
+            curr = next;
+            next = 0;
+        }
+        return result;
+    }
+    
+    
 
     vector<vector<int> > levelOrder1(TreeNode * root) {
         vector<vector<int> > res;
